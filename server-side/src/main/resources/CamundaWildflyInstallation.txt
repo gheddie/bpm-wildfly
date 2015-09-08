@@ -8,7 +8,7 @@
  
  + follow http://docs.camunda.org/latest/guides/installation-guide/jboss/
  
- + ------------ experimental ------------
+ + ------------- experimental -------------
  
  + add camunda-engine dependency to server pom.xml (with 'provided' scope) in <dependencies> section, not <dependencyManagement>
  

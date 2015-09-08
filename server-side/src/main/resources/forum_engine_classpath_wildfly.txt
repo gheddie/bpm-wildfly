@@ -14,7 +14,7 @@ What i did:
  + (2) deployed a simple ejb application (ejb-remote from wildfly qucikstarts, https://github.com/wildfly/quickstart/tree/9.x/ejb-remote)
  + (3) as described in the thread above, add camunda engine dependency to the server pom (using a provided scope, we worked that out in the thread):
  
- //--------------------------------------------->schnipp
+ //--------------------------------------------->schnipp 
  
 		<dependency>
 			<groupId>org.camunda.bpm</groupId>

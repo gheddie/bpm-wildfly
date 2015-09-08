@@ -1,0 +1,68 @@
+
+ + auspacken, bin/standalone.bat starten
+ + http://localhost:8080/camunda
+ + https://docs.jboss.org/author/display/WFLY8/EJB+invocations+from+a+remote+client+using+JNDI?_sscc=t
+ + build server + client
+ + deploy server jar (wildfly-ejb-remote-server-side.jar) to standalone/deployments of bpm wildfly
+ + run client
+ 
+ + follow http://docs.camunda.org/latest/guides/installation-guide/jboss/
+ 
+ + ------------ experimental ------------
+ 
+ + add camunda-engine dependency to server pom.xml (with 'provided' scope) in <dependencies> section, not <dependencyManagement>
+ 
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine</artifactId>
+			<version>7.3.0</version>
+			<scope>provided</scope>
+		</dependency> 
+ 
+ + inject process engine in 'CalculatorBean' as following:
+ 
+	@Resource(mappedName = "java:global/camunda-bpm-platform/process-engine/default")
+	private ProcessEngine processEngine;
+	
+	--> gives class not found exception (Caused by: java.lang.ClassNotFoundException: org.camunda.bpm.engine.ProcessEngine
+			from [Module \"deployment.wildfly-ejb-remote-server-side.jar:main\" from Service Module Loader]"}})
+			
+ + fixed it by mainfest entry (in server pom) like this:
+ 
+      <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-war-plugin</artifactId>
+       <configuration>
+          <archive>
+             <manifestEntries>
+                <Dependencies>org.camunda.bpm.camunda-engine</Dependencies>
+             </manifestEntries>
+          </archive>
+       </configuration>
+     </plugin>
+ 
+ + ---> FORUM !!! (https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!msg/camunda-bpm-users/nMIoXd2C1oA/39xaA6_aCgAJ)
+ 
+ + added engine cdi support (also provided?!?) : --> still getting error class not found (Lorg/camunda/bpm/engine/ProcessEngine)
+ 
+	<dependency>
+		<groupId>org.camunda.bpm</groupId>
+		<artifactId>camunda-engine-cdi</artifactId>
+		<version>7.3.0</version>
+	</dependency>
+	
+ + as in http://docs.camunda.org/latest/real-life/how-to/, added
+ 
+		<dependency>
+			<groupId>org.camunda.bpm.javaee</groupId>
+			<artifactId>camunda-ejb-client</artifactId>
+			<version>7.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
+ ---> error still there
+ 
+ 
+ 
+ 
+	

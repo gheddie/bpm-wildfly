@@ -1,0 +1,60 @@
+Problem with injecting a process engine to a session bean (in camunda wildfly)
+------------------------------------------------------------------------------------------------------------------------
+
+Hello.
+
+I am trying to inject a process engine into a stateless session bean in camunda wildfly (7.3.0). You already helped me very good
+doing so in 2014 (that one was about camunda Jboss 7), so i used that forum thread to do so in wildfly:
+
+https://groups.google.com/forum/#!topic/camunda-bpm-users/W8RnxwFSp7g
+
+What i did:
+
+ + (1) downloaded camunda wildfly
+ + (2) deployed a simple ejb application (ejb-remote from wildfly qucikstarts, https://github.com/wildfly/quickstart/tree/9.x/ejb-remote)
+ + (3) as described in the thread above, add camunda engine dependency to the server pom (using a provided scope, we worked that out in the thread):
+ 
+ //--------------------------------------------->schnipp
+ 
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine</artifactId>
+			<version>7.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+ 
+ //---------------------------------------------<schnapp
+ 
+ + (4) as also described in the thread above, i added a manefest entry to my server pom:
+ 
+ //--------------------------------------------->schnipp
+ 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Dependencies>org.camunda.bpm.camunda-engine</Dependencies>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+ 
+ //---------------------------------------------<schnapp
+ 
+Doing (3)+(4) made the error
+
+ //--------------------------------------------->schnipp
+
+	class not found exception (Caused by: java.lang.ClassNotFoundException: org.camunda.bpm.engine.ProcessEngine
+			from [Module \"deployment.wildfly-ejb-remote-server-side.jar:main\" from Service Module Loader]"}})
+			
+ //---------------------------------------------<schnapp
+ 
+go away in jboss 7, but it is still there in camunda wildfly.
+
+I must have forgotten something. Can you help me?
+
+Thanks,
+Stefan

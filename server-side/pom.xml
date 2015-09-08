@@ -98,7 +98,6 @@
 			<groupId>org.camunda.bpm</groupId>
 			<artifactId>camunda-engine-cdi</artifactId>
 			<version>7.3.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.camunda.bpm.javaee</groupId>
@@ -144,7 +143,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
+				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
 					<archive>
 						<manifestEntries>

@@ -31,7 +31,7 @@
  
       <plugin>
        <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-war-plugin</artifactId>
+       <artifactId>maven-war-plugin</artifactId> (better 'ear' than 'war'!!)
        <configuration>
           <archive>
              <manifestEntries>

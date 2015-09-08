@@ -16,8 +16,11 @@
  */
 package org.jboss.as.quickstarts.ejb.remote.stateless;
 
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
+import org.camunda.bpm.engine.ProcessEngine;
 
 /**
  * @author Jaikiran Pai
@@ -26,12 +29,12 @@ import javax.ejb.Stateless;
 @Remote(RemoteCalculator.class)
 public class CalculatorBean implements RemoteCalculator {
 
-//	@Resource(mappedName = "java:global/camunda-bpm-platform/process-engine/default")
-//	private ProcessEngine processEngine;
+	@Resource(mappedName = "java:global/camunda-bpm-platform/process-engine/default")
+	private ProcessEngine processEngine;
 
 	@Override
 	public int add(int a, int b) {
-//		System.out.println("process engine is : " + processEngine);
+		System.out.println("process engine is : " + processEngine);
 		System.out.println(" @@@ adding : " + a + " + " + b + " @@@ ");
 		return a + b;
 	}
